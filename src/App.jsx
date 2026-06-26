@@ -120,9 +120,11 @@ function App() {
     return () => clearTimeout(timer);
   }, [typedText, isDeleting, roleIndex]);
 
-  // Scroll chat to bottom
+  // Scroll chat to bottom (only when user interacts to prevent scroll-to-chat on mount)
   useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (messages.length > 1 || isTyping) {
+      chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }
   }, [messages, isTyping]);
 
   // Trigger celebration confetti
